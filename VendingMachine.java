@@ -172,6 +172,19 @@ public class VendingMachine {
         // Accept ONLY $1 bills.
         // Return true if enough money inserted.
         // Return false if cancelled.
+        int totalInserted = 0;
+        while(totalInserted < price) {
+            System.out.println("Insert $1 bill (or type 'cancel' to cancel):");
+            String input = readLineTrimmed();
+            if (input.equalsIgnoreCase("cancel")) {
+                return false;
+            } else if (input.equals("$1") || input.equals("1")) {
+                totalInserted += 1;
+                System.out.println("Total inserted: $" + totalInserted);
+            } else {
+                System.out.println("Invalid input. Please insert a $1 bill or type 'cancel'.");
+            }
+        }
         return false;
     }
 
@@ -179,6 +192,10 @@ public class VendingMachine {
     private int calculateChange(int price) {
         // TODO (Jordan):
         // Return insertedAmount - price
+        int change = insertedAmount - price;
+        if (change >0) {
+            System.out.println("Returnchange: $" +change);
+        }
         return 0;
     }
 
