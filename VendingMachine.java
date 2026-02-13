@@ -1,23 +1,19 @@
 // VendingMachine.java
 // Assignment 4: Working Together — Vending Machine (TODO-only skeleton)
-//
+
 // REQUIREMENTS OWNERSHIP SPLIT:
-//
+
 // Partner A — Thomas (Bullets 1–4, 8)
 // 1) Large variety of snacks
 // 2) Each snack has a price
 // 3) Welcome + usage instructions
 // 4) User selects snack
 // 8) Departure message
-//
+
 // Partner B — Jordan (Bullets 5–7)
 // 5) Accept unlimited $1 bills only
 // 6) Exact change returned
 // 7) Confirmation before transaction + full refund on cancel
-//
-// TEAM CONTRACT (decide once and do NOT change without discussion):
-// - Pricing unit: whole dollars recommended (simplest with $1 bills).
-// - Menu indexing: choose 1..N or 0..N-1 and keep consistent.
 
 import java.util.*;
 
