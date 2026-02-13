@@ -73,56 +73,73 @@ public class VendingMachine {
 
     // Bullet 1 & 2: Large variety + price per snack
     private void loadDefaultInventory() {
-        // TODO (Thomas):
-        // Add 8–12 snacks minimum.
-        // Each snack must have a price.
-        // Example:
-        // inventory.add(new Snack("Chips", 2));
+        inventory.clear();
+        inventory.add(new Snack("Classic Chips", 2));
+        inventory.add(new Snack("BBQ Chips", 2));
+        inventory.add(new Snack("Pretzels", 2));
+        inventory.add(new Snack("Chocolate Bar", 3));
+        inventory.add(new Snack("Granola Bar", 2));
+        inventory.add(new Snack("Gummy Bears", 2));
+        inventory.add(new Snack("Trail Mix", 3));
+        inventory.add(new Snack("Peanuts", 2));
+        inventory.add(new Snack("Cookies", 3));
+        inventory.add(new Snack("Crackers", 2));
     }
 
     // Bullet 3: Welcome + instructions
     private void displayWelcomeAndInstructions() {
-        // TODO (Thomas):
-        // Print welcome message.
-        // Explain:
-        // - How to select snack
-        // - Only $1 bills accepted
-        // - Confirmation step exists
-        // - Cancel option exists
+        System.out.println("Welcome to the CSC109 Vending Machine!");
+        System.out.println("Select a snack by entering its menu number.");
+        System.out.println("This machine accepts only $1 bills.");
+        System.out.println("You will be asked to confirm before purchase.");
+        System.out.println("You can cancel during payment or at confirmation.");
     }
 
     // Bullet 1 & 4: Display menu
     private void displaySnackMenu() {
-        // TODO (Thomas):
-        // Print numbered list of snacks with formatted prices.
+        System.out.println();
+        System.out.println("Available snacks:");
+        for (int i = 0; i < inventory.size(); i++) {
+            System.out.printf("%d) %s%n", i + 1, inventory.get(i));
+        }
     }
 
     // Bullet 4: Snack selection + validation
     private Snack promptForSnackSelection() {
-        // TODO (Thomas):
-        // Prompt user for menu choice.
-        // Validate input.
-        // Return chosen Snack.
-        return null;
+        while (true) {
+            System.out.print("Enter snack number: ");
+            int menuIndex = parseMenuIndex(readLineTrimmed(), 1, inventory.size());
+            if (menuIndex != -1) {
+                return inventory.get(menuIndex - 1);
+            }
+            System.out.println("Invalid selection. Enter a number from 1 to " + inventory.size() + ".");
+        }
     }
 
     private String readLineTrimmed() {
-        // TODO (Thomas):
-        // Read and trim user input.
-        return null;
+        return scanner.nextLine().trim();
     }
 
     private int parseMenuIndex(String input, int minInclusive, int maxInclusive) {
-        // TODO (Thomas):
-        // Convert input to integer.
-        // Validate range.
-        return -1;
+        try {
+            int parsed = Integer.parseInt(input);
+            if (parsed >= minInclusive && parsed <= maxInclusive) {
+                return parsed;
+            }
+            return -1;
+        } catch (NumberFormatException ex) {
+            return -1;
+        }
     }
 
     // Bullet 8: Positive departure message
     private void printDepartureMessage(Snack snack) {
-        // TODO (Thomas):
-        // Print encouraging message about snack choice.
+        if (snack == null) {
+            System.out.println("Thanks for visiting the vending machine!");
+            return;
+        }
+        System.out.println("Great choice: " + snack.getName() + ". Enjoy your snack!");
+        System.out.println("Thanks for using the CSC109 Vending Machine.");
     }
 
     // Snack model (Thomas owns formatting and price structure)
@@ -131,7 +148,6 @@ public class VendingMachine {
         private final int price;
 
         Snack(String name, int price) {
-            // TODO (Thomas): assign fields
             this.name = name;
             this.price = price;
         }
@@ -145,16 +161,12 @@ public class VendingMachine {
         }
 
         String getFormattedPrice() {
-            // TODO (Thomas):
-            // Format as "$X"
-            return null;
+            return "$" + price;
         }
 
         @Override
         public String toString() {
-            // TODO (Thomas):
-            // Return formatted snack display string
-            return null;
+            return name + " - " + getFormattedPrice();
         }
     }
 
