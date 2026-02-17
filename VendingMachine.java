@@ -184,36 +184,36 @@ public class VendingMachine {
         // Accept ONLY $1 bills.
         // Return true if enough money inserted.
         // Return false if cancelled.
-        int totalInserted = 0;
-        while(totalInserted < price) {
+        int insertedAmount = 0;
+        while(insertedAmount < price) {
             System.out.println("Insert $1 bill (or type 'cancel' to cancel):");
             String input = readLineTrimmed();
             if (input.equalsIgnoreCase("cancel")) {
                 return false;
             } else if (input.equals("$1") || input.equals("1")) {
-                totalInserted += 1;
-                System.out.println("Total inserted: $" + totalInserted);
+                insertedAmount += 1;
+                System.out.println("Total inserted: $" + insertedAmount);
             } else {
                 System.out.println("Invalid input. Please insert a $1 bill or type 'cancel'.");
             }
         }
-        return false;
+        return true;
     }
 
     // Bullet 6: Exact change
     private int calculateChange(int price) {
         // TODO (Jordan):
         // Return insertedAmount - price
-        int change = insertedAmount - price;
-        if (change >0) {
-            System.out.println("Returnchange: $" +change);
-        }
-        return 0;
+        return insertedAmount - price;
     }
-
-    private void returnChange(int change) {
+    private void returnChange(int change){
         // TODO (Jordan):
         // Print exact change returned.
+            if (change >0) {
+                System.out.println("Returning change: $" + change);
+            } else {
+                System.out.println("No change to return.");
+            }
     }
 
     // Bullet 7: Confirmation before transaction
@@ -222,17 +222,30 @@ public class VendingMachine {
         // Ask user to confirm purchase.
         // Return true if confirmed.
         // Return false if cancelled.
-        return false;
+        System.out.printf("You selected: %s, which costs %s. You have inserted $%d.%n",
+                snack.getName(), snack.getFormattedPrice(), inserted);
+        System.out.println("Confirm purchase? (yes/no)");
+        String input = readLineTrimmed();
+        return input.equalsIgnoreCase("yes");
+
     }
 
     private void refundFullAmount() {
         // TODO (Jordan):
         // Print refund message.
         // Reset insertedAmount to 0.
+        if (insertedAmount > 0) {
+            System.out.println("Transaction cancelled. Refunding: $" + insertedAmount);
+            insertedAmount = 0;
+        } else {
+            System.out.println("Transaction cancelled. No money to refund.");
+        }
     }
 
     private void resetTransactionState() {
         // TODO (Jordan):
         // Reset insertedAmount and selectedSnack.
+        insertedAmount = 0;
+        selectedSnack = null;
     }
 }
