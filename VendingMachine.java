@@ -48,23 +48,31 @@ public class VendingMachine {
     // ============================================================
 
     public void run() {
-        // TODO:
-        // 1) Thomas: loadDefaultInventory()
-        // 2) Thomas: displayWelcomeAndInstructions()
-        //
-        // Transaction Flow:
-        //   a) Thomas: displaySnackMenu()
-        //   b) Thomas: selectedSnack = promptForSnackSelection()
-        //   c) Jordan: acceptMoneyUntilReadyOrCancel(selectedSnack.getPrice())
-        //   d) If cancelled → Jordan: refundFullAmount()
-        //   e) Jordan: promptForConfirmation(...)
-        //   f) If not confirmed → Jordan: refundFullAmount()
-        //   g) Dispense snack
-        //   h) Jordan: calculateChange() + returnChange()
-        //   i) Thomas: printDepartureMessage()
-        //   j) Jordan: resetTransactionState()
-        //
-        // Optional: loop for multiple purchases
+        loadDefaultInventory();
+        displayWelcomeAndInstructions();
+
+        displaySnackMenu();
+        selectedSnack = promptForSnackSelection();
+
+        if (!acceptMoneyUntilReadyOrCancel(selectedSnack.getPrice())) {
+            refundFullAmount();
+            printDepartureMessage(null);
+            resetTransactionState();
+            return;
+        }
+
+        if (!promptForConfirmation(selectedSnack, selectedSnack.getPrice(), insertedAmount)) {
+            refundFullAmount();
+            printDepartureMessage(null);
+            resetTransactionState();
+            return;
+        }
+
+        System.out.println("Dispensing: " + selectedSnack.getName());
+        int change = calculateChange(selectedSnack.getPrice());
+        returnChange(change);
+        printDepartureMessage(selectedSnack);
+        resetTransactionState();
     }
 
     // ============================================================
@@ -249,3 +257,4 @@ public class VendingMachine {
         selectedSnack = null;
     }
 }
+
